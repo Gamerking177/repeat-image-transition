@@ -1,5 +1,5 @@
 
-import { preloadImages } from './utils.js';
+import { preloadImages } from '../../public/js/utils.js';
 
 // Configuration object remains exactly the same
 const config = {
