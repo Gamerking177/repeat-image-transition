@@ -886,9 +886,27 @@ const Gallery = () => {
           animationFrameId = requestAnimationFrame(raf);
         }
 
-        // Preload images
-        const { preloadImages } = await import('public/js/utils.js');
-        await preloadImages('.grid__item-image, .panel__img');
+        // Replace the import with this code
+        await new Promise((resolve) => {
+          const script = document.createElement('script');
+          script.src = '/js/utils.js';
+          script.onload = () => {
+            // Small delay to ensure utils are loaded
+            setTimeout(() => {
+              if (window.preloadImages) {
+                window.preloadImages('.grid__item-image, .panel__img').then(resolve);
+              } else {
+                console.error('preloadImages not found');
+                resolve();
+              }
+            }, 100);
+          };
+          script.onerror = () => {
+            console.error('Failed to load utils.js');
+            resolve();
+          };
+          document.body.appendChild(script);
+        });
 
         document.body.classList.remove('loading');
         setIsReady(true);
@@ -921,7 +939,7 @@ const Gallery = () => {
         console.log('Dispatching panelReady event');
         window.dispatchEvent(event);
       }, 100);
-      
+
       return () => clearTimeout(timer);
     }
   }, [panelRef.current]);
