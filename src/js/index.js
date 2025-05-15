@@ -1,3 +1,4 @@
+
 import { preloadImages } from './utils.js';
 
 // Configuration object remains exactly the same
