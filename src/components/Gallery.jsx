@@ -887,7 +887,7 @@ const Gallery = () => {
         }
 
         // Preload images
-        const { preloadImages } = await import('../js/utils.js');
+        const { preloadImages } = await import('/js/utils.js');
         await preloadImages('.grid__item-image, .panel__img');
 
         document.body.classList.remove('loading');
